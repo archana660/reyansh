@@ -1,0 +1,20 @@
+stages:
+  - stage: TerraformInit
+    displayName: Terraform Init
+    jobs:
+      - job: TerraformInit
+        displayName: Terraform Init
+        steps:
+        - task: TerraformInstaller@1
+          inputs:
+            terraformVersion: 'latest'
+
+        - task: TerraformTask@5
+          inputs:
+            provider: 'azurerm'
+            command: 'init'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/environment/dev'
+            backendServiceArm: 'home-svc'
+            backendAzureRmStorageAccountName: 'stghomecare101'
+            backendAzureRmContainerName: 'homecare'
+            backendAzureRmKey: 'dev.tfstate'    
